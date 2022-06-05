@@ -25,6 +25,6 @@ export class VoteEntity extends BaseEntity {
   user: UserEntity;
 
   @ApiProperty({ type: () => PostEntity })
-  @ManyToOne(() => PostEntity, (post) => post.votes)
+  @ManyToOne(() => PostEntity, (post) => post.votes, {onDelete:'CASCADE'})
   post: PostEntity;
 }

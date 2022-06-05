@@ -18,8 +18,10 @@ export class CommentRepository extends Repository<CommentEntity> {
         'user.firstName',
         'user.lastName',
         'user.email',
+        'post.id'
       ])
-      .innerJoin('comment.user', 'user');
+      .leftJoin('comment.post', 'post')
+      .leftJoin('comment.user', 'user');
   }
 
   async findAndCount(options: CommentFilter): Promise<[CommentEntity[], number]> {
@@ -28,10 +30,10 @@ export class CommentRepository extends Repository<CommentEntity> {
     const { skip, take, comment, postId } = options;
     qb.skip(skip);
     qb.take(take);
+    qb.where('post.id = :postId', { postId });
 
     if (comment) {
-      qb.where({
-        postId,
+      qb.andWhere({
         comment: Like(`%${comment}%`)
       });
     }

@@ -20,7 +20,7 @@ export class CommentEntity extends BaseEntity {
   comment: string;
 
   @ApiProperty({ type: () => PostEntity })
-  @ManyToOne(() => PostEntity, (post) => post.comments)
+  @ManyToOne(() => PostEntity, (post) => post.comments, {onDelete:'CASCADE'})
   post: PostEntity;
 
   @ApiProperty({ type: () => UserEntity })
